@@ -5,6 +5,7 @@ const authorSchema = new Schema({
   name: String,
   lastName: String,
   birthday: Date,
+  nationality: String,
   pictureUrl: String,
 });
 

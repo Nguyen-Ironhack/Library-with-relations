@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Book = require('./models/Book');
+const Author = require('./models/Author');
 
 mongoose.connect('mongodb://localhost/library', {
   userNewUrlParser: true,
@@ -149,11 +150,21 @@ const books = [
 ];
 
 
-Book.insertMany(books)
-  .then(books => {
-    console.log(`Success! Added ${books.length} books to the database`);
-    mongoose.connection.close();
-  })
-  .catch(err => {
-    console.log(err);
-  });
+// Book.insertMany(books)
+//   .then(books => {
+//     console.log(`Success! Added ${books.length} books to the database`);
+//     mongoose.connection.close();
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
+
+books.forEach(book => {
+  Author.create(book.author)
+    .then(dbAuthor => {
+      book.author = dbAuthor._id;
+      Book.create(book);
+    });
+});
+
+

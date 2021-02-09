@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Book = require('../models/Book');
+const Author = require('../models/Author');
 
 router.get('/books', (req, res) => {
   // get all the books from the database -> find() returns all the documents
@@ -13,7 +14,9 @@ router.get('/books', (req, res) => {
 });
 
 router.get('/books/add', (req, res) => {
-  res.render('bookForm', {});
+  Author.find()
+    .then(authors => res.render('bookForm', {authors}))
+    .catch(err => console.log(err));
 });
 
 router.get('/books/delete/:id', (req, res) => {
@@ -48,6 +51,7 @@ router.get('/books/:id', (req, res) => {
   const bookId = req.params.id;
   // get the book with this id
   Book.findById(bookId)
+    .populate('author')
     .then(book => {
       console.log(book);
       // render a book details view
