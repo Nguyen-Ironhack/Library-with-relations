@@ -68,4 +68,13 @@ router.post('/books/edit/:id', (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.post('/books/:id/reviews', (req, res) => {
+  const bookId = req.params.id;
+  const { user, comments } = req.body;
+  // Book.findByIdAndUpdate(bookId, {$push: {reviews: {user: user, comments: comments} }}).exec();
+  Book.findOneAndUpdate({_id: bookId}, {$push: {reviews: {user: user, comments: comments} }})
+    .then(book => res.redirect(`/books/${book._id}`))
+    .catch(err => console.log(err));
+});
+
 module.exports = router;

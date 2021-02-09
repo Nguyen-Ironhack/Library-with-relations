@@ -8,7 +8,13 @@ const bookSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Author' // that is the name of the model that is id refers to
   },
-  rating: Number
+  rating: Number,
+  reviews: [
+    {
+      user: String,
+      comments: String
+    }
+  ]
 });
 
 const Book = mongoose.model('Book', bookSchema);

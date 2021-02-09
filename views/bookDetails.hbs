@@ -14,3 +14,22 @@
 <a href="/books/edit/{{_id}}">Edit this book</a>
 <a href="/books/delete/{{_id}}">Delete this book</a>
 {{/with}}
+
+{{!-- List the reviews --}}
+<h3>Review</h3>
+{{#if bookDetails.reviews}}
+{{#each bookDetails.reviews}}
+<p><span>User: </span> {{user}}</p>
+<p><span>Comments: </span> {{comments}}</p>
+
+{{/each}}
+{{/if}}
+{{!-- Add a review --}}
+<p>Add a review</p>
+<form action="/books/{{bookDetails._id}}/reviews" method="POST">
+  <label for="user">User:</label>
+  <input type="text" name="user" id="user">
+  <label for="comments">Comments:</label>
+  <input type="text" name="comments" id="comments">
+  <button type="submit">Add this review</button>
+</form>
